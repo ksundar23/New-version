@@ -1,6 +1,5 @@
-import type { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
 
   eslint: {
@@ -12,7 +11,7 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    unoptimized: true,
+    domains: ['localhost'],
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
@@ -24,10 +23,13 @@ const nextConfig: NextConfig = {
   },
 
   experimental: {
+    allowedDevOrigins: [
+      "https://*.run.app",
+      "https://*.googleusercontent.com",
+    ],
   },
 
-  output: 'export',
   compress: true,
 };
 
-export default nextConfig;
+module.exports = nextConfig;
