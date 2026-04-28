@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   },
 
   images: {
+    unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
@@ -23,12 +24,9 @@ const nextConfig: NextConfig = {
   },
 
   experimental: {
-    allowedDevOrigins: [
-      "https://*.run.app",
-      "https://*.googleusercontent.com",
-    ],
   },
 
+  output: 'export',
   compress: true,
 };
 

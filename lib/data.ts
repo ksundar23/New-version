@@ -1,3 +1,4 @@
+// Local Image assets: Place your images in /public/images/ and reference them as '/images/your-image.png'
 export const portfolioProjects = [
   {
     id: '1',
