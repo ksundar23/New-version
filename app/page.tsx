@@ -89,7 +89,7 @@ export default function Home() {
             className="mx-auto max-w-4xl text-center px-6"
           >
             <p className="mx-auto mb-10 text-xl md:text-2xl font-medium text-white drop-shadow-md leading-relaxed max-w-3xl">
-              Crafting immersive visuals, casino games, character design, environment art, concept illustration, and engaging player experiences.
+              Crafting immersive visuals, slot games, character design, environment art, concept illustration, and engaging player experiences.
             </p>
             <div className="flex items-center justify-center gap-6">
               <Link href="#portfolio" className="inline-flex h-12 items-center justify-center rounded bg-white px-8 font-semibold text-black transition-all hover:bg-gray-200">

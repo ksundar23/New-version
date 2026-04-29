@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
   reactStrictMode: true,
 
   eslint: {
@@ -11,6 +12,7 @@ const nextConfig = {
   },
 
   images: {
+    unoptimized: true,
     domains: ['localhost'],
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -22,12 +24,7 @@ const nextConfig = {
     ],
   },
 
-  experimental: {
-    allowedDevOrigins: [
-      "https://*.run.app",
-      "https://*.googleusercontent.com",
-    ],
-  },
+
 
   compress: true,
 };

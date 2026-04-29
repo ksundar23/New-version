@@ -30,7 +30,7 @@ export default function About() {
         
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Sundarrajan</h2>
         <p className="text-[15px] text-gray-300 mb-2 font-medium">
-          Game artist & casino slot specialist
+          Game artist & slot specialist
         </p>
         <p className="text-sm text-gray-400 flex items-center gap-1.5 mb-4">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
@@ -69,7 +69,7 @@ export default function About() {
         <section className="mb-14 border-b border-white/5 pb-14">
           <h2 className="text-2xl font-bold text-white mb-6 tracking-wide">Summary</h2>
           <p className="text-[15px] leading-relaxed text-gray-300">
-            I am a Game Artist focused on the casino slot industry, with a passion for visually striking, player-focused design. For the past several years, I&apos;ve dedicated myself to understanding what makes a casino game not just playable, but memorable.
+            I am a Game Artist focused on the slot industry, with a passion for visually striking, player-focused design. For the past several years, I&apos;ve dedicated myself to understanding what makes a slot game not just playable, but memorable.
             <br/><br/>
             My work goes beyond just making things look good. I focus on hierarchy, readability, and the psychology behind color and light to create experiences that keep players engaged. My ultimate vision is to lead art teams as an Art Director, establishing high-end visual pillars and mentoring the next generation of game artists.
           </p>

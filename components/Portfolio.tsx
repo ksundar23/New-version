@@ -67,7 +67,7 @@ export default function Portfolio() {
       >
         <h2 className="text-4xl font-bold md:text-5xl text-white">Artworks</h2>
         <p className="mt-4 text-sm text-gray-400 max-w-2xl mx-auto">
-          A selection of my best work in casino slot game art, environments, and
+          A selection of my best work in slot game art, environments, and
           <br className="hidden md:block"/> character design.
         </p>
       </motion.div>

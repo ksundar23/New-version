@@ -26,7 +26,7 @@ export default function Navbar() {
             SUNDARRAJAN ART
           </span>
           <span className="text-[13px] text-gray-300 font-medium tracking-wide">
-            Game artist & casino slot specialist
+            Game artist & slot specialist
           </span>
         </Link>
 
