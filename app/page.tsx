@@ -114,7 +114,10 @@ export default function Home() {
     </div>
 
       <section id="portfolio" className="w-full">
-        <Portfolio projects={siteData.portfolioProjects} />
+        <Portfolio
+          projects={siteData.portfolioProjects}
+          categories={siteData.portfolioCategories}
+        />
       </section>
 
       <section id="about" className="w-full">

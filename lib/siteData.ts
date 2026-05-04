@@ -57,6 +57,7 @@ export type SiteData = {
   heroActions: HeroAction[];
   about: AboutData;
   contact: ContactData;
+  portfolioCategories: string[];
   portfolioProjects: PortfolioProject[];
   blogPosts: BlogPost[];
   publish: PublishState;
@@ -117,6 +118,7 @@ export const defaultSiteData: SiteData = {
     ],
     availableText: 'Available for Freelance & Full-time',
   },
+  portfolioCategories: ['Game Art', 'Environment', 'Characters'],
   portfolioProjects: [
     {
       id: '1',
@@ -257,12 +259,35 @@ export const defaultSiteData: SiteData = {
   },
 };
 
+export function normalizeSiteData(data: Partial<SiteData>): SiteData {
+  return {
+    ...defaultSiteData,
+    ...data,
+    about: {
+      ...defaultSiteData.about,
+      ...(data.about ?? {}),
+    },
+    contact: {
+      ...defaultSiteData.contact,
+      ...(data.contact ?? {}),
+    },
+    portfolioCategories: data.portfolioCategories ?? defaultSiteData.portfolioCategories,
+    portfolioProjects: data.portfolioProjects ?? defaultSiteData.portfolioProjects,
+    blogPosts: data.blogPosts ?? defaultSiteData.blogPosts,
+    publish: {
+      ...defaultSiteData.publish,
+      ...(data.publish ?? {}),
+    },
+  };
+}
+
 export function loadSavedSiteData(): SiteData | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw) as SiteData;
+    const parsed = JSON.parse(raw) as Partial<SiteData>;
+    return normalizeSiteData(parsed);
   } catch {
     return null;
   }

@@ -4,9 +4,14 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { PortfolioProject } from '../lib/siteData';
 
-const categories = ['All', 'Game Art', 'Environment', 'Characters'];
-
-export default function Portfolio({ projects }: { projects: PortfolioProject[] }) {
+export default function Portfolio({
+  projects,
+  categories = ['All', 'Game Art', 'Environment', 'Characters'],
+}: {
+  projects: PortfolioProject[];
+  categories?: string[];
+}) {
+  const categoryList = ['All', ...(categories || [])];
   const [activeCategory, setActiveCategory] = useState('All');
 
   const filteredProjects = activeCategory === 'All' 
@@ -79,7 +84,7 @@ export default function Portfolio({ projects }: { projects: PortfolioProject[] }
         transition={{ delay: 0.1 }}
         className="mb-16 flex flex-wrap justify-center gap-3 px-6"
       >
-        {categories.map((category) => (
+        {categoryList.map((category) => (
           <button
             key={category}
             onClick={() => setActiveCategory(category)}

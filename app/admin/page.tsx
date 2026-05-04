@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Save, LogOut, Lock } from 'lucide-react';
+import { Save, LogOut, Lock, Plus } from 'lucide-react';
 import {
   SiteData,
   defaultSiteData,
@@ -106,6 +106,56 @@ export default function Admin() {
       projects[index] = project;
       return { ...prev, portfolioProjects: projects };
     });
+  };
+
+  const updateCategory = (index: number, value: string) => {
+    setSiteData((prev) => {
+      const categories = [...prev.portfolioCategories];
+      categories[index] = value;
+      return { ...prev, portfolioCategories: categories };
+    });
+  };
+
+  const addCategory = () => {
+    setSiteData((prev) => ({
+      ...prev,
+      portfolioCategories: [...prev.portfolioCategories, 'New Category'],
+    }));
+  };
+
+  const removeCategory = (index: number) => {
+    setSiteData((prev) => ({
+      ...prev,
+      portfolioCategories: prev.portfolioCategories.filter((_, idx) => idx !== index),
+    }));
+  };
+
+  const updateContactLink = (index: number, key: keyof SiteData['contact']['networkLinks'][number], value: string) => {
+    setSiteData((prev) => {
+      const networkLinks = [...prev.contact.networkLinks];
+      networkLinks[index] = { ...networkLinks[index], [key]: value } as any;
+      return { ...prev, contact: { ...prev.contact, networkLinks } };
+    });
+  };
+
+  const addContactLink = () => {
+    setSiteData((prev) => ({
+      ...prev,
+      contact: {
+        ...prev.contact,
+        networkLinks: [...prev.contact.networkLinks, { name: 'New Link', url: 'https://example.com' }],
+      },
+    }));
+  };
+
+  const removeContactLink = (index: number) => {
+    setSiteData((prev) => ({
+      ...prev,
+      contact: {
+        ...prev.contact,
+        networkLinks: prev.contact.networkLinks.filter((_, idx) => idx !== index),
+      },
+    }));
   };
 
   const addProject = () => {
@@ -389,6 +439,124 @@ export default function Admin() {
                 className="mt-2 w-full rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
               />
             </label>
+          </div>
+        </section>
+
+        <section className="mb-10 rounded-3xl border border-white/10 bg-[#111111]/90 p-6">
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-bold">Portfolio Categories</h2>
+              <p className="text-sm text-gray-400">Edit category labels for the portfolio filter tabs.</p>
+            </div>
+            <button
+              onClick={addCategory}
+              className="rounded-2xl bg-white/5 px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+            >
+              Add Category
+            </button>
+          </div>
+          <div className="space-y-4">
+            {siteData.portfolioCategories.map((category, index) => (
+              <div key={index} className="grid gap-4 sm:grid-cols-[1fr_auto] items-center">
+                <label className="block text-sm text-gray-300">
+                  Category {index + 1}
+                  <input
+                    value={category}
+                    onChange={(e) => updateCategory(index, e.target.value)}
+                    className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                  />
+                </label>
+                <button
+                  type="button"
+                  onClick={() => removeCategory(index)}
+                  className="h-12 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm font-semibold text-red-200 transition hover:bg-red-500/20"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10 rounded-3xl border border-white/10 bg-[#111111]/90 p-6">
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-bold">Contact Section</h2>
+              <p className="text-sm text-gray-400">Edit contact header, subtitle, availability text, and network links.</p>
+            </div>
+            <button
+              onClick={addContactLink}
+              className="rounded-2xl bg-white/5 px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+            >
+              Add Link
+            </button>
+          </div>
+          <div className="grid gap-6 xl:grid-cols-2">
+            <label className="block text-sm text-gray-300">
+              Contact header
+              <input
+                value={siteData.contact.header}
+                onChange={(e) => updateField('contact', { ...siteData.contact, header: e.target.value })}
+                className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              />
+            </label>
+            <label className="block text-sm text-gray-300">
+              Contact subtitle
+              <textarea
+                value={siteData.contact.subtitle}
+                onChange={(e) => updateField('contact', { ...siteData.contact, subtitle: e.target.value })}
+                rows={4}
+                className="mt-2 w-full rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              />
+            </label>
+            <label className="block text-sm text-gray-300">
+              Email
+              <input
+                value={siteData.contact.email}
+                onChange={(e) => updateField('contact', { ...siteData.contact, email: e.target.value })}
+                className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              />
+            </label>
+            <label className="block text-sm text-gray-300">
+              Availability text
+              <input
+                value={siteData.contact.availableText}
+                onChange={(e) => updateField('contact', { ...siteData.contact, availableText: e.target.value })}
+                className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              />
+            </label>
+            <div className="lg:col-span-2">
+              <h3 className="text-lg font-semibold text-white">Network links</h3>
+              <div className="space-y-4 mt-4">
+                {siteData.contact.networkLinks.map((link, index) => (
+                  <div key={index} className="grid gap-4 lg:grid-cols-2">
+                    <label className="block text-sm text-gray-300">
+                      Link name
+                      <input
+                        value={link.name}
+                        onChange={(e) => updateContactLink(index, 'name', e.target.value)}
+                        className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                      />
+                    </label>
+                    <label className="block text-sm text-gray-300">
+                      URL
+                      <input
+                        value={link.url}
+                        onChange={(e) => updateContactLink(index, 'url', e.target.value)}
+                        className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => removeContactLink(index)}
+                      className="col-span-2 inline-flex items-center justify-center rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm font-semibold text-red-200 transition hover:bg-red-500/20"
+                    >
+                      Remove Link
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
