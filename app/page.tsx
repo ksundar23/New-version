@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'motion/react';
 import dynamic from 'next/dynamic';
 
+import { defaultSiteData, loadSavedSiteData } from '../lib/siteData';
+
 const Portfolio = dynamic(() => import('../components/Portfolio'), {
   ssr: false,
 });
@@ -16,9 +18,16 @@ import Contact from '../components/Contact';
 export default function Home() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll();
+  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);  
+  const [siteData, setSiteData] = useState(defaultSiteData);
 
-  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  
+  useEffect(() => {
+    const saved = loadSavedSiteData();
+    if (saved) {
+      setSiteData(saved);
+    }
+  }, []);
+
   const images = [
     "https://picsum.photos/seed/egypt_gold/1920/1080",
     "https://picsum.photos/seed/casino_art/1920/1080",
@@ -89,14 +98,14 @@ export default function Home() {
             className="mx-auto max-w-4xl text-center px-6"
           >
             <p className="mx-auto mb-10 text-xl md:text-2xl font-medium text-white drop-shadow-md leading-relaxed max-w-3xl">
-              Crafting immersive visuals, slot games, character design, environment art, concept illustration, and engaging player experiences.
+              {siteData.heroText}
             </p>
             <div className="flex items-center justify-center gap-6">
-              <Link href="#portfolio" className="inline-flex h-12 items-center justify-center rounded bg-white px-8 font-semibold text-black transition-all hover:bg-gray-200">
-                Artworks
+              <Link href={siteData.heroActions[0]?.href ?? '#portfolio'} className="inline-flex h-12 items-center justify-center rounded bg-white px-8 font-semibold text-black transition-all hover:bg-gray-200">
+                {siteData.heroActions[0]?.label ?? 'Artworks'}
               </Link>
-              <Link href="#contact" className="inline-flex h-12 items-center justify-center rounded border border-white/20 bg-[#050505] px-8 font-semibold text-white transition-all hover:bg-black/80">
-                Hire Me
+              <Link href={siteData.heroActions[1]?.href ?? '#contact'} className="inline-flex h-12 items-center justify-center rounded border border-white/20 bg-[#050505] px-8 font-semibold text-white transition-all hover:bg-black/80">
+                {siteData.heroActions[1]?.label ?? 'Hire Me'}
               </Link>
             </div>
           </motion.div>
@@ -105,15 +114,15 @@ export default function Home() {
     </div>
 
       <section id="portfolio" className="w-full">
-        <Portfolio />
+        <Portfolio projects={siteData.portfolioProjects} />
       </section>
 
       <section id="about" className="w-full">
-        <About />
+        <About about={siteData.about} />
       </section>
 
       <section id="contact" className="w-full">
-        <Contact />
+        <Contact contact={siteData.contact} />
       </section>
     </div>
   );

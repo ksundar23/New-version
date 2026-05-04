@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
+import { ContactData } from '../lib/siteData';
 
-export default function Contact() {
+export default function Contact({ contact }: { contact: ContactData }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -41,23 +42,31 @@ export default function Contact() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
             </span>
-            <span className="text-sm font-medium text-green-400">Available for Freelance & Full-time</span>
+            <span className="text-sm font-medium text-green-400">{contact.availableText}</span>
           </div>
 
           <div className="space-y-6">
             <div>
               <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">Email</h3>
-              <a href="mailto:hello@sundarrajanart.com" className="text-xl font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
-                hello@sundarrajanart.com
+              <a href={`mailto:${contact.email}`} className="text-xl font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+                {contact.email}
               </a>
             </div>
             
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">Network</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">{contact.networkTitle}</h3>
               <div className="flex flex-col gap-2">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-fit text-lg font-medium text-white hover:text-indigo-400 transition-colors">LinkedIn ↗</a>
-                <a href="https://artstation.com" target="_blank" rel="noopener noreferrer" className="w-fit text-lg font-medium text-white hover:text-indigo-400 transition-colors">ArtStation ↗</a>
-                <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="w-fit text-lg font-medium text-white hover:text-indigo-400 transition-colors">Behance ↗</a>
+                {contact.networkLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-fit text-lg font-medium text-white hover:text-indigo-400 transition-colors"
+                  >
+                    {link.name} ↗
+                  </a>
+                ))}
               </div>
             </div>
           </div>

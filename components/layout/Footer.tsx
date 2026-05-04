@@ -13,11 +13,14 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex flex-col items-center md:items-end gap-2 text-sm text-gray-400">
-          <nav className="flex gap-6 mb-2">
+          <nav className="flex flex-wrap items-center justify-center gap-4 mb-2">
             <Link href="/#home" className="hover:text-white transition-colors">Home</Link>
             <Link href="/#portfolio" className="hover:text-white transition-colors">Portfolio</Link>
             <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
             <Link href="/#contact" className="hover:text-white transition-colors">Contact</Link>
+            <Link href="/admin" className="rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500">
+              Login
+            </Link>
           </nav>
           <p>© {new Date().getFullYear()} Alexander Art. All rights reserved.</p>
         </div>

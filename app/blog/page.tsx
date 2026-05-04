@@ -1,11 +1,20 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { blogPosts } from '../../lib/data';
+import { defaultSiteData, loadSavedSiteData, BlogPost } from '../../lib/siteData';
 
 export default function Blog() {
+  const [posts, setPosts] = useState<BlogPost[]>(defaultSiteData.blogPosts);
+
+  useEffect(() => {
+    const saved = loadSavedSiteData();
+    if (saved) {
+      setPosts(saved.blogPosts);
+    }
+  }, []);
+
   return (
     <div className="py-24 px-6 mx-auto max-w-7xl">
       <div className="mb-16 text-center">
@@ -16,7 +25,7 @@ export default function Blog() {
       </div>
 
       <div className="grid gap-10 lg:grid-cols-3">
-        {blogPosts.map((post) => (
+        {posts.map((post) => (
           <article key={post.id} className="group flex flex-col overflow-hidden rounded-2xl bg-[#0a0a0a] border border-white/5 transition-colors hover:border-white/10 text-left">
             <Link href={`/blog/${post.slug}`} className="relative block aspect-[16/9] w-full overflow-hidden bg-white/5">
               <Image 

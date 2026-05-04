@@ -2,16 +2,16 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
-import { portfolioProjects } from '../lib/data';
+import { PortfolioProject } from '../lib/siteData';
 
 const categories = ['All', 'Game Art', 'Environment', 'Characters'];
 
-export default function Portfolio() {
+export default function Portfolio({ projects }: { projects: PortfolioProject[] }) {
   const [activeCategory, setActiveCategory] = useState('All');
 
   const filteredProjects = activeCategory === 'All' 
-    ? portfolioProjects 
-    : portfolioProjects.filter(p => p.category === activeCategory);
+    ? projects 
+    : projects.filter(p => p.category === activeCategory);
 
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
@@ -96,7 +96,7 @@ export default function Portfolio() {
 
       <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-px">
         <AnimatePresence mode='popLayout'>
-          {filteredProjects.map((project) => (
+          {filteredProjects.map((project, i) => (
             <motion.div 
               key={project.id} 
               layout
@@ -135,7 +135,7 @@ export default function Portfolio() {
                   style={{ objectFit: "cover" }}
                   sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   className="transition-transform duration-700 group-hover:scale-105"
-                  priority={portfolioProjects.indexOf(project) < 4}
+                  priority={i < 4}
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
